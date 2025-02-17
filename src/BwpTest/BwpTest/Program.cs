@@ -29,6 +29,7 @@ app.UseAntiforgery();
 app.MapStaticAssets();
 app.MapRazorComponents<App>()
     .AddInteractiveWebAssemblyRenderMode()
-    .AddAdditionalAssemblies(typeof(BwpTest.Client._Imports).Assembly);
+    .AddAdditionalAssemblies(typeof(BwpTest.Client._Imports).Assembly)
+    .AddAdditionalAssemblies(typeof(BlazorWasmProfiler.Razor._Imports).Assembly);
 
 app.Run();

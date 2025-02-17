@@ -12,4 +12,12 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Bwp\BlazorWasmProfiler.Core\BlazorWasmProfiler.Core.csproj" />
+    <ProjectReference Include="..\..\Bwp\BlazorWasmProfiler.Generator\BlazorWasmProfiler.Generator.csproj" />
+    <ProjectReference Include="..\..\Bwp\BlazorWasmProfiler.Razor\BlazorWasmProfiler.Razor.csproj" />
+    <ProjectReference Include="..\..\Bwp\BlazorWasmProfiler.Task\BlazorWasmProfiler.Task.csproj" />
+    <ProjectReference Include="..\..\Bwp\BlazorWasmProfiler\BlazorWasmProfiler.csproj" />
+  </ItemGroup>
+
 </Project>
