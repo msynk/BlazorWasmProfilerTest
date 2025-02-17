@@ -1,0 +1,91 @@
+﻿@page "/methodcallstatistics"
+
+<style>
+    /* Basic table styles */
+    .table {
+        border-collapse: collapse;
+        border: 1px solid #ccc;
+        font-size: 14px;
+    }
+
+        /* Header row styles */
+        .table thead {
+            background-color: #f2f2f2;
+        }
+
+        /* Table header cell styles */
+        .table th {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+        }
+
+        /* Table body row styles */
+        .table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .table tbody tr:hover {
+            background-color: #ddd;
+        }
+
+        /* Table data cell styles */
+        .table td {
+            padding: 8px;
+            border-bottom: 1px solid #ccc;
+        }
+</style>
+
+<h3>Method Call Statistics</h3>
+
+@if (methodStatistics != null && methodStatistics.Count > 0)
+{
+    <p>
+        Order by:
+        <InputSelect @bind-Value="selectedOrder">
+            @foreach (StatisticsOrder order in Enum.GetValues<StatisticsOrder>())
+            {
+                <option value="@order">@order.ToString()</option>
+            }
+        </InputSelect>
+    </p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Caller</th>
+                <th>Method</th>
+                <th>Count</th>
+                <th>Total Time (ms)</th>
+                <th>Average Time (ms)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ExecutionData executionData in ExecutionStatistics.GetMethodStatistics(selectedOrder))
+            {
+                <tr>
+                    <td>@executionData.Caller</td>
+                    <td>@executionData.Name</td>
+                    <td>@executionData.Count</td>
+                    <td>@executionData.TotalTime.TotalMilliseconds</td>
+                    <td>@executionData.GetAverageTime().TotalMilliseconds</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No method call statistics available.</p>
+}
+
+@code {
+    private StatisticsOrder selectedOrder = StatisticsOrder.AverageTime;
+
+    private IReadOnlyDictionary<string, ExecutionData>? methodStatistics;
+
+    protected override void OnInitialized()
+    {
+        methodStatistics = ExecutionStatistics.GetMethodStatistics();
+    }
+}
